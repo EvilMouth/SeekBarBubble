@@ -19,8 +19,26 @@ compile 'com.zyhang:seekBarBubble:{LastVersion}'
 
 ## Delegate [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
 
+以不侵入的思路为SeekBar增加气泡跟随，依赖SeekBar本身提供的OnSeekBarChangeListener
 
 ### Installation
 ```
 compile 'com.zyhang:seekBarBubbleDelegate:{LastVersion}'
+```
+
+### Usage
+具体可以参考[SeekBarBubble](https://github.com/yuhangjiayou/SeekBarBubble/blob/master/seekBarBubble/src/main/java/com/zyhang/seekBarBubble/SeekBarBubble.java)
+```
+SeekBarBubbleDelegate delegate = new SeekBarBubbleDelegate(context, bubbleView);
+seekBar.setOnSeekBarChangeListener {
+  onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    delegate.onProgressChanged(seekBar, progress, fromUser);
+  }
+  onStartTrackingTouch(SeekBar seekBar) {
+    delegate.onStartTrackingTouch(seekBar);
+  }
+  onStopTrackingTouch(SeekBar seekBar) {
+    delegate.onStopTrackingTouch(seekBar);
+  }
+}
 ```
