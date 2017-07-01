@@ -3,14 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SeekBarBubble.iml" filepath="$PROJECT_DIR$/SeekBarBubble.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SeekBarBubble.iml" filepath="$PROJECT_DIR$/SeekBarBubble.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/seekBarBubble/seekBarBubble.iml" filepath="$PROJECT_DIR$/seekBarBubble/seekBarBubble.iml" />
-      <module fileurl="file://$PROJECT_DIR$/seekBarBubble/seekBarBubble.iml" filepath="$PROJECT_DIR$/seekBarBubble/seekBarBubble.iml" />
       <module fileurl="file://$PROJECT_DIR$/seekBarBubbleDelegate/seekBarBubbleDelegate.iml" filepath="$PROJECT_DIR$/seekBarBubbleDelegate/seekBarBubbleDelegate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/seekBarBubbleDelegate/seekBarBubbleDelegate.iml" filepath="$PROJECT_DIR$/seekBarBubbleDelegate/seekBarBubbleDelegate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/seekbarbubbledelegate-kotlin/seekbarbubbledelegate-kotlin.iml" filepath="$PROJECT_DIR$/seekbarbubbledelegate-kotlin/seekbarbubbledelegate-kotlin.iml" />
     </modules>
   </component>
 </project>
