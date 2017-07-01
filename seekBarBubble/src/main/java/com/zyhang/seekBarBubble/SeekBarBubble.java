@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.zyhang.seekBarBubble.delegate.SeekBarBubbleDelegate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * ProjectName:SeekBarBubble
  * Description:
@@ -23,8 +20,6 @@ import java.util.List;
 public class SeekBarBubble extends android.support.v7.widget.AppCompatSeekBar implements SeekBar.OnSeekBarChangeListener {
 
     private SeekBarBubbleDelegate mDelegate;
-    private List<OnSeekBarChangeListener> mListeners;
-    private boolean mIsDragging;
 
     public SeekBarBubble(Context context) {
         this(context, null);
@@ -39,8 +34,6 @@ public class SeekBarBubble extends android.support.v7.widget.AppCompatSeekBar im
 
         mDelegate = new SeekBarBubbleDelegate(getContext(),
                 LayoutInflater.from(getContext()).inflate(R.layout.seekbar_bubble, null));
-        mListeners = new ArrayList<>();
-        mIsDragging = false;
 
         setOnSeekBarChangeListener(this);
     }
@@ -55,43 +48,30 @@ public class SeekBarBubble extends android.support.v7.widget.AppCompatSeekBar im
     }
 
     public void addOnSeekBarChangeListener(OnSeekBarChangeListener l) {
-        mListeners.add(l);
+        mDelegate.addOnSeekBarChangeListener(l);
     }
 
     public void removeOnSeekBarChangeListener(OnSeekBarChangeListener l) {
-        mListeners.remove(l);
+        mDelegate.removeOnSeekBarChangeListener(l);
     }
 
     public void clearOnSeekBarChangeListener() {
-        mListeners.clear();
+        mDelegate.clearOnSeekBarChangeListener();
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mIsDragging) {
-            ((TextView) mDelegate.getBubble().findViewById(R.id.seekBar_bubble_tv)).setText(String.format("%s''", progress));
-            mDelegate.onProgressChanged(seekBar, progress, fromUser);
-        }
-        for (OnSeekBarChangeListener listener : mListeners) {
-            listener.onProgressChanged(seekBar, progress, fromUser);
-        }
+        ((TextView) mDelegate.getBubble().findViewById(R.id.seekBar_bubble_tv)).setText(String.format("%s''", progress));
+        mDelegate.onProgressChanged(seekBar, progress, fromUser);
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        mIsDragging = true;
         mDelegate.onStartTrackingTouch(seekBar);
-        for (OnSeekBarChangeListener listener : mListeners) {
-            listener.onStartTrackingTouch(seekBar);
-        }
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        mIsDragging = false;
         mDelegate.onStopTrackingTouch(seekBar);
-        for (OnSeekBarChangeListener listener : mListeners) {
-            listener.onStopTrackingTouch(seekBar);
-        }
     }
 }

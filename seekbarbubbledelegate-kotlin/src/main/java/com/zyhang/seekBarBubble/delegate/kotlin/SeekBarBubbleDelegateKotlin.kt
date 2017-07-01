@@ -12,43 +12,21 @@ import com.zyhang.seekBarBubble.delegate.SeekBarBubbleDelegate
  * Modify remark:
  */
 
-val SeekBar.mListeners: ArrayList<SeekBar.OnSeekBarChangeListener>
-    get() = arrayListOf()
-
-fun SeekBar.addOnSeekBarChangeListener(l: SeekBar.OnSeekBarChangeListener) {
-    mListeners.add(l)
-}
-
-fun SeekBar.removeOnSeekBarChangeListener(l: SeekBar.OnSeekBarChangeListener) {
-    mListeners.remove(l)
-}
-
-fun SeekBar.clearOnSeekBarChangeListener() {
-    mListeners.clear()
-}
-
-fun SeekBarBubbleDelegate.attachToSeekBar(sb: SeekBar) {
+fun SeekBarBubbleDelegate.attachToSeekBar(sb: SeekBar, onProgressChanged: (SeekBar, Int, Boolean) -> Unit) {
     sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            sb.mListeners.forEach {
-                it.onProgressChanged(seekBar, progress, fromUser)
-            }
+            onProgressChanged(seekBar, progress, fromUser)
+            this@attachToSeekBar.onProgressChanged(seekBar, progress, fromUser)
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
-//            sb.mIsDragging = true
-//            this@attachToSeekBar.onStartTrackingTouch(seekBar)
-            sb.mListeners.forEach {
-                it.onStartTrackingTouch(seekBar)
-            }
+            this@attachToSeekBar.isDragging = true
+            this@attachToSeekBar.onStartTrackingTouch(seekBar)
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-//            sb.mIsDragging = false
-//            this@attachToSeekBar.onStopTrackingTouch(seekBar)
-            sb.mListeners.forEach {
-                it.onStopTrackingTouch(seekBar)
-            }
+            this@attachToSeekBar.isDragging = false
+            this@attachToSeekBar.onStopTrackingTouch(seekBar)
         }
     })
 }
