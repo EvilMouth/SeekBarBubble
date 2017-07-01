@@ -32,3 +32,29 @@ dependencies {
     compile project(':seekBarBubbleDelegate')
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'seekBarBubbleDelegate-kotlin'
+
+    publishedGroupId = 'com.zyhang'
+    artifact = 'seekBarBubbleDelegate-kotlin'
+
+    siteUrl = 'https://github.com/yuhangjiayou/SeekBarBubble'
+    gitUrl = 'https://github.com/yuhangjiayou/SeekBarBubble.git'
+
+    libraryVersion = seekBarBubble_version
+    libraryName = 'SeekBarBubbleDelegate-kotlin'
+    libraryDescription = 'bubble follow seekBar thumb delegate kotlin'
+
+    developerId = 'zyhang'
+    developerName = 'zyhang'
+    developerEmail = 'zyhang4502@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from:'../gradle/install.gradle'
+apply from:'../gradle/bintray.gradle'
