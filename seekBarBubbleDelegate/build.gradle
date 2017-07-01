@@ -40,7 +40,7 @@ ext {
     siteUrl = 'https://github.com/yuhangjiayou/SeekBarBubble'
     gitUrl = 'https://github.com/yuhangjiayou/SeekBarBubble.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = seekBarBubble_version
     libraryName = 'SeekBarBubbleDelegate'
     libraryDescription = 'bubble follow seekBar thumb delegate'
 
