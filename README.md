@@ -4,7 +4,7 @@
 SeekBar滑动跟随气泡
 
 ## LastVersion
-`1.0.1`
+`1.0.2`
 
 ## SeekBarBubble [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubble/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubble/_latestVersion)
 继承SeekBar基于SeekBarBubbleDelegate提供的一款简单的气泡跟随SeekBar
