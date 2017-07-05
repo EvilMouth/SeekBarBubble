@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                 LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
         val seekBar = findViewById(R.id.seekBar) as SeekBar
         seekBarBubbleDelegate.attachToSeekBar(seekBar) { _, progress, _ ->
-            (seekBarBubbleDelegate.bubble.findViewById(R.id.seekBar_bubble_tv) as TextView)
-                    .text = "$progress''"
+            (seekBarBubbleDelegate.bubble.findViewById(R.id.seekBar_bubble_tv) as TextView).text = "$progress''"
         }
         seekBarBubbleDelegate.addOnSeekBarChangeListener(this)
     }

@@ -25,17 +25,26 @@ import java.util.List;
 
 public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
+    /**
+     * 气泡
+     */
     private View mBubble;
     private boolean mIsDragging;
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
+    /**
+     * 气泡移动范围
+     */
     private Rect mRect;
-    private float mSeekBarProgressWidth;
+    /**
+     * 状态栏高度
+     */
     private int mStatusBarHeight;
     private List<SeekBar.OnSeekBarChangeListener> mListeners;
 
     public SeekBarBubbleDelegate(Context context, View bubble) {
         mBubble = bubble;
+        mBubble.setVisibility(View.INVISIBLE);
 
         mIsDragging = false;
 
@@ -57,8 +66,6 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
         mRect = new Rect();
 
-        mSeekBarProgressWidth = 0F;
-
         mStatusBarHeight = getStatusBarHeight();
 
         mListeners = new ArrayList<>();
@@ -66,13 +73,15 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mIsDragging && mBubble.getMeasuredWidth() > 0) {
-            float x = mSeekBarProgressWidth / seekBar.getMax() * progress + mRect.left + seekBar.getPaddingLeft() - (mBubble.getWidth() / 2);
+        int bubbleWidth = mBubble.getWidth();
+        if (mIsDragging && bubbleWidth > 0) {
+            float x = mRect.left + ((float) mRect.width() / seekBar.getMax() * progress) - (bubbleWidth / 2);
             mLayoutParams.x = (int) x;
             mLayoutParams.y = mRect.top - mStatusBarHeight - mBubble.getHeight();
 
-            mBubble.setVisibility(View.VISIBLE);
+            //更新气泡位置
             mWindowManager.updateViewLayout(mBubble, mLayoutParams);
+            mBubble.setVisibility(View.VISIBLE);
         }
 
         for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
@@ -83,14 +92,13 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         mIsDragging = true;
-        if (mSeekBarProgressWidth == 0F) {
-            mSeekBarProgressWidth = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
-        }
-
+        //获取整个SeekBar在屏幕的位置
         seekBar.getGlobalVisibleRect(mRect);
-        if (mBubble.getWidth() <= 0) {
-            mBubble.setVisibility(View.INVISIBLE);
-        }
+        //重复赋值left right为气泡移动范围
+        int offset = seekBar.getThumb().getIntrinsicWidth() / 2 - seekBar.getThumbOffset();
+        mRect.left = mRect.left + seekBar.getPaddingLeft() + offset;
+        mRect.right = mRect.right - seekBar.getPaddingRight() - offset;
+        //将气泡加入window
         mWindowManager.addView(mBubble, mLayoutParams);
 
         for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
@@ -114,11 +122,6 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
     public boolean isDragging() {
         return mIsDragging;
-    }
-
-    public SeekBarBubbleDelegate setDragging(boolean dragging) {
-        mIsDragging = dragging;
-        return this;
     }
 
     private int getStatusBarHeight() {

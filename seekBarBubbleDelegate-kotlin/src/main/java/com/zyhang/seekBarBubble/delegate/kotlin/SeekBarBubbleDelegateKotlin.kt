@@ -20,12 +20,10 @@ fun SeekBarBubbleDelegate.attachToSeekBar(sb: SeekBar, onProgressChanged: (SeekB
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
-            this@attachToSeekBar.isDragging = true
             this@attachToSeekBar.onStartTrackingTouch(seekBar)
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            this@attachToSeekBar.isDragging = false
             this@attachToSeekBar.onStopTrackingTouch(seekBar)
         }
     })
