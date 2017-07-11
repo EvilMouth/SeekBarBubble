@@ -35,7 +35,7 @@ public class SeekBarBubble extends android.support.v7.widget.AppCompatSeekBar im
         mDelegate = new SeekBarBubbleDelegate(getContext(),
                 LayoutInflater.from(getContext()).inflate(R.layout.seekbar_bubble, null));
 
-        setOnSeekBarChangeListener(this);
+        super.setOnSeekBarChangeListener(this);
     }
 
     /**
@@ -44,7 +44,6 @@ public class SeekBarBubble extends android.support.v7.widget.AppCompatSeekBar im
      */
     @Override
     public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
-        super.setOnSeekBarChangeListener(l);
     }
 
     public void addOnSeekBarChangeListener(OnSeekBarChangeListener l) {

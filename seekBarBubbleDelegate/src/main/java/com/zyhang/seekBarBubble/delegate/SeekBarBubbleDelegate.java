@@ -58,7 +58,7 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        if ("Xiaomi".equals(Build.MANUFACTURER) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
@@ -109,7 +109,7 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         mIsDragging = false;
-        mWindowManager.removeViewImmediate(mBubble);
+        removeBubble();
 
         for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
             listener.onStopTrackingTouch(seekBar);
@@ -145,5 +145,13 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
     public void clearOnSeekBarChangeListener() {
         mListeners.clear();
+    }
+
+    public void removeBubble() {
+        try {
+            mWindowManager.removeViewImmediate(mBubble);
+        } catch (Exception e) {
+            //do nothing
+        }
     }
 }
