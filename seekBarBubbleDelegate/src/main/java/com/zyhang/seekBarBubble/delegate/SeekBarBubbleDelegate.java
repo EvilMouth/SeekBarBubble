@@ -58,7 +58,7 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
-        if ("Xiaomi".equals(Build.MANUFACTURER) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        if (XiaoMiUtils.isMIUI() || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
