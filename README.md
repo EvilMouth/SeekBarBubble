@@ -42,3 +42,19 @@ seekBar.setOnSeekBarChangeListener {
   }
 }
 ```
+
+## Kotlin Help [ ![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate-kotlin/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate-kotlin/_latestVersion)
+
+### Installation
+```
+compile 'com.zyhang:seekBarBubbleDelegate-kotlin:{LastVersion}'
+```
+
+### Usage
+```
+SeekBarBubbleDelegate delegate = SeekBarBubbleDelegate(context, bubbleView)
+delegate.attachToSeekBar(seekBar) { _, progress, _ ->
+  //do something here
+}
+delegate.addOnSeekBarChangeListener(this)
+```
