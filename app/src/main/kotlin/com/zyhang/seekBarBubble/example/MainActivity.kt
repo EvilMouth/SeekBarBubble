@@ -6,9 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import android.widget.TextView
-import com.zyhang.seekBarBubble.SeekBarBubble
 import com.zyhang.seekBarBubble.delegate.SeekBarBubbleDelegate
-import com.zyhang.seekBarBubble.delegate.kotlin.attachToSeekBar
+import com.zyhang.seekBarBubble.delegate.kotlin.setDefaultListener
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * ProjectName:SeekBarBubble
@@ -22,25 +22,29 @@ import com.zyhang.seekBarBubble.delegate.kotlin.attachToSeekBar
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     companion object {
-        private val TAG = "MainActivity"
+        private const val TAG = "MainActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //view
-        val seekBarBubble = findViewById(R.id.seekBarBubble) as SeekBarBubble
-        seekBarBubble.addOnSeekBarChangeListener(this)
+        // view
+        seekBarBubble.delegate
+                .addSeekBarChangeListener(this)
 
-        //delegate
+        // delegate
         val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
+                seekBar,
                 LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
-        val seekBar = findViewById(R.id.seekBar) as SeekBar
-        seekBarBubbleDelegate.attachToSeekBar(seekBar) { _, progress, _ ->
-            (seekBarBubbleDelegate.bubble.findViewById(R.id.seekBar_bubble_tv) as TextView).text = "$progress''"
+        with(seekBarBubbleDelegate) {
+            setDefaultListener { _, progress, _ ->
+                bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "$progress''"
+            }
+            // always show
+            showBubble(true)
+            bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "${seekBar.progress}''"
         }
-        seekBarBubbleDelegate.addOnSeekBarChangeListener(this)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

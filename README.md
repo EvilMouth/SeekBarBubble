@@ -1,10 +1,42 @@
 # SeekBarBubble
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-SeekBar滑动跟随气泡
+SeekBar滑动跟随气泡辅助
 
 ## LastVersion
-`1.1.0`
+`1.1.1`
+
+## Delegate [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
+
+以不侵入的思路为SeekBar增加气泡跟随，依赖SeekBar本身提供的OnSeekBarChangeListener
+
+### Installation
+```gradle
+implementation 'com.zyhang:seekbarbubbledelegate:<LastVersion>'
+```
+
+### Usage
+具体可以参考[MainActivity.kt](https://github.com/izyhang/SeekBarBubble/blob/master/app/src/main/java/com/zyhang/seekBarBubble/example/MainActivity.kt)
+```kotlin
+val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
+                seekBar,
+                LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
+        with(seekBarBubbleDelegate) {
+            setDefaultListener { _, progress, _ ->
+                bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "$progress''"
+            }
+            // always show
+            showBubble(true)
+            bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "${seekBar.progress}''"
+        }
+```
+
+## Kotlin 扩展 [ ![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate-kotlin/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate-kotlin/_latestVersion)
+
+### Installation
+```gradle
+implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<LastVersion>'
+```
 
 ## SeekBarBubble [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubble/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubble/_latestVersion)
 继承SeekBar基于SeekBarBubbleDelegate提供的一款简单的气泡跟随SeekBar
@@ -13,48 +45,16 @@ SeekBar滑动跟随气泡
 ![](screenshot/1.png)
 
 ### Installation
-```
-compile 'com.zyhang:seekBarBubble:{LastVersion}'
-```
-
-## Delegate [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
-
-以不侵入的思路为SeekBar增加气泡跟随，依赖SeekBar本身提供的OnSeekBarChangeListener
-
-### Installation
-```
-compile 'com.zyhang:seekBarBubbleDelegate:{LastVersion}'
+```gradle
+implementation 'com.zyhang:seekbarbubble:<LastVersion>'
 ```
 
 ### Usage
-具体可以参考[SeekBarBubble](https://github.com/yuhangjiayou/SeekBarBubble/blob/master/seekBarBubble/src/main/java/com/zyhang/seekBarBubble/SeekBarBubble.java)
-```
-SeekBarBubbleDelegate delegate = new SeekBarBubbleDelegate(context, bubbleView);
-seekBar.setOnSeekBarChangeListener {
-  onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-    delegate.onProgressChanged(seekBar, progress, fromUser);
-  }
-  onStartTrackingTouch(SeekBar seekBar) {
-    delegate.onStartTrackingTouch(seekBar);
-  }
-  onStopTrackingTouch(SeekBar seekBar) {
-    delegate.onStopTrackingTouch(seekBar);
-  }
-}
-```
-
-## Kotlin Help [ ![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate-kotlin/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate-kotlin/_latestVersion)
-
-### Installation
-```
-compile 'com.zyhang:seekBarBubbleDelegate-kotlin:{LastVersion}'
-```
-
-### Usage
-```
-SeekBarBubbleDelegate delegate = SeekBarBubbleDelegate(context, bubbleView)
-delegate.attachToSeekBar(seekBar) { _, progress, _ ->
-  //do something here
-}
-delegate.addOnSeekBarChangeListener(this)
+```xml
+<com.zyhang.seekBarBubble.SeekBarBubble
+            android:id="@+id/seekBarBubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:sbb_alwaysShow="true"/>
 ```

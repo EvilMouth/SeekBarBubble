@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * ProjectName:SeekBarBubble
  * Description:
- * Created by zyhang on 2017/7/17.下午5:14
+ * Created by zyhang on 2017/7/17.17:14
  * Modify by:
  * Modify time:
  * Modify remark:

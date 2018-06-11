@@ -12,19 +12,20 @@ import com.zyhang.seekBarBubble.delegate.SeekBarBubbleDelegate
  * Modify remark:
  */
 
-fun SeekBarBubbleDelegate.attachToSeekBar(sb: SeekBar, onProgressChanged: (SeekBar, Int, Boolean) -> Unit) {
-    sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+fun SeekBarBubbleDelegate.setDefaultListener(onStartTrackingTouch: (SeekBar) -> Unit = {},
+                                             onStopTrackingTouch: (SeekBar) -> Unit = {},
+                                             onProgressChanged: (SeekBar, Int, Boolean) -> Unit) {
+    setDefaultListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             onProgressChanged(seekBar, progress, fromUser)
-            this@attachToSeekBar.onProgressChanged(seekBar, progress, fromUser)
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
-            this@attachToSeekBar.onStartTrackingTouch(seekBar)
+            onStartTrackingTouch(seekBar)
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            this@attachToSeekBar.onStopTrackingTouch(seekBar)
+            onStopTrackingTouch(seekBar)
         }
     })
 }

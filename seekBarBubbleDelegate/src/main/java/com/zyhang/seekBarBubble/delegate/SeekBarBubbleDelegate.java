@@ -1,13 +1,15 @@
 package com.zyhang.seekBarBubble.delegate;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * ProjectName:SeekBarBubble
  * Description:
- * Created by zyhang on 2017/6/29.下午2:35
+ * Created by zyhang on 2017/6/29.14:35
  * Modify by:
  * Modify time:
  * Modify remark:
@@ -25,11 +27,19 @@ import java.util.List;
 
 public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
 
+    private SeekBar mSeekBar;
     /**
      * 气泡
      */
     private View mBubble;
-    private boolean mIsDragging;
+    /**
+     * 气泡是否已经添加到窗口
+     */
+    private boolean mBubbleAdded;
+    /**
+     * 永久显示气泡
+     */
+    private boolean mAlwaysShow;
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
     /**
@@ -40,14 +50,15 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
      * 状态栏高度
      */
     private int mStatusBarHeight;
-    private List<SeekBar.OnSeekBarChangeListener> mListeners;
+    /**
+     * 固定监听，不被clear清除
+     * {@link SeekBarBubbleDelegate#clearSeekBarChangeListener()}
+     */
+    @Nullable
+    private SeekBar.OnSeekBarChangeListener mDefaultListener;
+    private List<SeekBar.OnSeekBarChangeListener> mAddListeners;
 
-    public SeekBarBubbleDelegate(Context context, View bubble) {
-        mBubble = bubble;
-        mBubble.setVisibility(View.INVISIBLE);
-
-        mIsDragging = false;
-
+    public SeekBarBubbleDelegate(@NonNull Context context, @NonNull SeekBar seekBar, @NonNull View bubble) {
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         mLayoutParams = new WindowManager.LayoutParams();
@@ -64,55 +75,36 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         }
 
+        bindSeekBar(seekBar);
+
+        setBubble(bubble);
+
         mRect = new Rect();
 
-        mStatusBarHeight = getStatusBarHeight();
+        mStatusBarHeight = StatusBarUtils.getStatusBarHeight();
 
-        mListeners = new ArrayList<>();
+        mAddListeners = new ArrayList<>();
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        int bubbleWidth = mBubble.getWidth();
-        if (mIsDragging && bubbleWidth > 0) {
-            float x = mRect.left + ((float) mRect.width() / seekBar.getMax() * progress) - (bubbleWidth / 2);
-            mLayoutParams.x = (int) x;
-            mLayoutParams.y = mRect.top - mStatusBarHeight - mBubble.getHeight();
-
-            //更新气泡位置
-            mWindowManager.updateViewLayout(mBubble, mLayoutParams);
-            mBubble.setVisibility(View.VISIBLE);
+    public void bindSeekBar(@NonNull SeekBar seekBar) {
+        if (mSeekBar != null) {
+            mSeekBar.setOnSeekBarChangeListener(null);
         }
-
-        for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
-            listener.onProgressChanged(seekBar, progress, fromUser);
-        }
+        mSeekBar = seekBar;
+        mSeekBar.setOnSeekBarChangeListener(this);
     }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        mIsDragging = true;
-        //获取整个SeekBar在屏幕的位置
-        seekBar.getGlobalVisibleRect(mRect);
-        //重复赋值left right为气泡移动范围
-        int offset = seekBar.getThumb().getIntrinsicWidth() / 2 - seekBar.getThumbOffset();
-        mRect.left = mRect.left + seekBar.getPaddingLeft() + offset;
-        mRect.right = mRect.right - seekBar.getPaddingRight() - offset;
-        //将气泡加入window
-        mWindowManager.addView(mBubble, mLayoutParams);
-
-        for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
-            listener.onStartTrackingTouch(seekBar);
-        }
+    public SeekBar getSeekBar() {
+        return mSeekBar;
     }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        mIsDragging = false;
-        removeBubble();
-
-        for (SeekBar.OnSeekBarChangeListener listener : mListeners) {
-            listener.onStopTrackingTouch(seekBar);
+    public void setBubble(@NonNull View bubble) {
+        if (mBubble != null) {
+            removeBubble();
+        }
+        mBubble = bubble;
+        if (mBubble.getVisibility() == View.VISIBLE) {
+            mBubble.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -120,38 +112,160 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
         return mBubble;
     }
 
-    public boolean isDragging() {
-        return mIsDragging;
+    /**
+     * 设置固定监听
+     */
+    public void setDefaultListener(@Nullable SeekBar.OnSeekBarChangeListener defaultListener) {
+        mDefaultListener = defaultListener;
     }
 
-    private int getStatusBarHeight() {
-        int height = 0;
-        try {
-            Resources resources = Resources.getSystem();
-            height = resources.getDimensionPixelSize(resources.getIdentifier("status_bar_height", "dimen", "android"));
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void addSeekBarChangeListener(SeekBar.OnSeekBarChangeListener l) {
+        mAddListeners.add(l);
+    }
+
+    public void removeSeekBarChangeListener(SeekBar.OnSeekBarChangeListener l) {
+        mAddListeners.remove(l);
+    }
+
+    public void clearSeekBarChangeListener() {
+        mAddListeners.clear();
+    }
+
+    /**
+     * 立即显示气泡
+     *
+     * @param always 是否永久显示
+     */
+    public void showBubble(boolean always) {
+        if (mBubbleAdded) {
+            return;
         }
-        return height;
+
+        mAlwaysShow = always;
+
+        if (!always) {
+            return;
+        }
+
+        if (mSeekBar.getWidth() <= 0) {
+            mSeekBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    showBubble(mSeekBar);
+                    mSeekBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        } else {
+            showBubble(mSeekBar);
+        }
     }
 
-    public void addOnSeekBarChangeListener(SeekBar.OnSeekBarChangeListener l) {
-        mListeners.add(l);
+    private void showBubble(final SeekBar seekBar) {
+        if (mBubbleAdded) {
+            return;
+        }
+
+        // 获取整个SeekBar在屏幕的位置
+        seekBar.getGlobalVisibleRect(mRect);
+        // 重复赋值left right为气泡移动范围
+        int offset = seekBar.getThumb().getIntrinsicWidth() / 2 - seekBar.getThumbOffset();
+        mRect.left = mRect.left + seekBar.getPaddingLeft() + offset;
+        mRect.right = mRect.right - seekBar.getPaddingRight() - offset;
+
+        // 将气泡添加到窗口
+        mWindowManager.addView(mBubble, mLayoutParams);
+        mBubbleAdded = true;
+
+        // 更新气泡位置
+        int bubbleWidth = mBubble.getWidth();
+        if (bubbleWidth <= 0) {
+            mBubble.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    updateBubblePosition(seekBar, seekBar.getProgress(), mBubble.getWidth(), mBubble.getHeight());
+                    mBubble.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        } else {
+            updateBubblePosition(seekBar, seekBar.getProgress(), bubbleWidth, mBubble.getHeight());
+        }
+
+        // 显示气泡
+        mBubble.setVisibility(View.VISIBLE);
     }
 
-    public void removeOnSeekBarChangeListener(SeekBar.OnSeekBarChangeListener l) {
-        mListeners.remove(l);
-    }
+    private void updateBubblePosition(SeekBar seekBar, int progress, int bubbleWidth, int bubbleHeight) {
+        if (!mBubbleAdded || bubbleWidth <= 0 || bubbleHeight <= 0) {
+            return;
+        }
+        float x = mRect.left + ((float) mRect.width() / seekBar.getMax() * progress) - (bubbleWidth / 2);
+        mLayoutParams.x = (int) x;
+        mLayoutParams.y = mRect.top - mStatusBarHeight - bubbleHeight;
 
-    public void clearOnSeekBarChangeListener() {
-        mListeners.clear();
+        // 更新气泡位置
+        mWindowManager.updateViewLayout(mBubble, mLayoutParams);
     }
 
     public void removeBubble() {
-        try {
-            mWindowManager.removeViewImmediate(mBubble);
-        } catch (Exception e) {
-            //do nothing
+        if (!mBubbleAdded || mAlwaysShow) {
+            return;
         }
+        mWindowManager.removeViewImmediate(mBubble);
+        mBubbleAdded = false;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (mDefaultListener != null) {
+            mDefaultListener.onProgressChanged(seekBar, progress, fromUser);
+        }
+
+        onDelegateProgressChanged(seekBar, progress, fromUser);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        if (mDefaultListener != null) {
+            mDefaultListener.onStartTrackingTouch(seekBar);
+        }
+
+        onDelegateStartTrackingTouch(seekBar);
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (mDefaultListener != null) {
+            mDefaultListener.onStopTrackingTouch(seekBar);
+        }
+
+        onDelegateStopTrackingTouch(seekBar);
+    }
+
+    private void onDelegateProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        for (SeekBar.OnSeekBarChangeListener listener : mAddListeners) {
+            listener.onProgressChanged(seekBar, progress, fromUser);
+        }
+
+        if (mAlwaysShow || fromUser) {
+            updateBubblePosition(seekBar, progress, mBubble.getWidth(), mBubble.getHeight());
+        }
+    }
+
+    private void onDelegateStartTrackingTouch(SeekBar seekBar) {
+        for (SeekBar.OnSeekBarChangeListener listener : mAddListeners) {
+            listener.onStartTrackingTouch(seekBar);
+        }
+
+        showBubble(seekBar);
+    }
+
+    private void onDelegateStopTrackingTouch(SeekBar seekBar) {
+        for (SeekBar.OnSeekBarChangeListener listener : mAddListeners) {
+            listener.onStopTrackingTouch(seekBar);
+        }
+
+        removeBubble();
     }
 }
