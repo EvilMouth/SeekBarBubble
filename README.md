@@ -1,9 +1,9 @@
 # SeekBarBubble
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-SeekBar滑动跟随气泡辅助
+SeekBar滑动跟随气泡辅助
 
-## LastVersion
+## latest-version
 `1.1.1`
 
 ## Delegate [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
@@ -12,7 +12,7 @@ SeekBar滑动跟随气泡辅助
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubbledelegate:<LastVersion>'
+implementation 'com.zyhang:seekbarbubbledelegate:<latest-version>'
 ```
 
 ### Usage
@@ -35,7 +35,7 @@ val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<LastVersion>'
+implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<latest-version>'
 ```
 
 ## SeekBarBubble [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubble/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubble/_latestVersion)
@@ -46,7 +46,7 @@ implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<LastVersion>'
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubble:<LastVersion>'
+implementation 'com.zyhang:seekbarbubble:<latest-version>'
 ```
 
 ### Usage
