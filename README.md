@@ -16,7 +16,7 @@ implementation 'com.zyhang:seekbarbubbledelegate:<LastVersion>'
 ```
 
 ### Usage
-具体可以参考[MainActivity.kt](https://github.com/izyhang/SeekBarBubble/blob/master/app/src/main/java/com/zyhang/seekBarBubble/example/MainActivity.kt)
+具体可以参考[MainActivity.kt](https://github.com/izyhang/SeekBarBubble/blob/master/app/src/main/kotlin/com/zyhang/seekBarBubble/example/MainActivity.kt)
 ```kotlin
 val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
                 seekBar,
