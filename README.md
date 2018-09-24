@@ -1,12 +1,10 @@
 # SeekBarBubble
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg)](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
 
 SeekBar滑动跟随气泡辅助
 
-## latest-version
-`1.1.1`
-
-## Delegate [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
+## Delegate
 
 以不侵入的思路为SeekBar增加气泡跟随，依赖SeekBar本身提供的OnSeekBarChangeListener
 
@@ -31,14 +29,15 @@ val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
         }
 ```
 
-## Kotlin 扩展 [ ![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate-kotlin/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubbleDelegate-kotlin/_latestVersion)
+## Kotlin 扩展
 
 ### Installation
 ```gradle
 implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<latest-version>'
 ```
 
-## SeekBarBubble [![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubble/images/download.svg) ](https://bintray.com/zyhang/maven/seekBarBubble/_latestVersion)
+## SeekBarBubble
+
 继承SeekBar基于SeekBarBubbleDelegate提供的一款简单的气泡跟随SeekBar
 
 ### Screenshot
