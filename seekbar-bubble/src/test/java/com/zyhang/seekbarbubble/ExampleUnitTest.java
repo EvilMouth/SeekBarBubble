@@ -1,4 +1,4 @@
-package com.zyhang.seekbarbubble.example;
+package com.zyhang.seekbarbubble;
 
 import org.junit.Test;
 

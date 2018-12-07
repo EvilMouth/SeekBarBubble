@@ -1,4 +1,4 @@
-package com.zyhang.seekbarbubble.example;
+package com.zyhang.seekbarbubble.delegate;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.zyhang.seekBarBubble.example", appContext.getPackageName());
+        assertEquals("com.zyhang.seekBarBubble.delegate.test", appContext.getPackageName());
     }
 }

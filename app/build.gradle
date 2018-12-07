@@ -6,12 +6,12 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.zyhang.seekBarBubble.example"
-        minSdkVersion rootProject.minSdkVersion
+        applicationId "com.zyhang.seekbarbubble.example"
+        minSdkVersion 21
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -37,6 +37,6 @@ dependencies {
 
     implementation kotlinStdlib
 
-    implementation project(':seekBarBubble')
-    implementation project(':seekBarBubbleDelegate-kotlin')
+    implementation project(':seekbar-bubble')
+    implementation project(':seekbar-bubble-delegate-kotlin')
 }

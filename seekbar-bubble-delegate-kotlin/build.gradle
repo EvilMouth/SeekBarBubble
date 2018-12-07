@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        versionCode 1
+        versionName POM_PUBLISH_VERSION
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation junit
+    androidTestImplementation runner
+    androidTestImplementation espresso
+
+    implementation appcompat
+
+    implementation kotlinStdlib
+
+    api project(':seekbar-bubble-delegate')
+}
+
+apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'

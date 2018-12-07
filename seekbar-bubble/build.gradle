@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        versionCode 1
+        versionName POM_PUBLISH_VERSION
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation junit
+    androidTestImplementation runner
+    androidTestImplementation espresso
+
+    implementation appcompat
+
+    api project(':seekbar-bubble-delegate')
+}
+
+apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'

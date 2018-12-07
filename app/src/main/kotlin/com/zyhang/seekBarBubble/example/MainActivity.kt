@@ -1,13 +1,13 @@
-package com.zyhang.seekBarBubble.example
+package com.zyhang.seekbarbubble.example
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import android.widget.TextView
-import com.zyhang.seekBarBubble.delegate.SeekBarBubbleDelegate
-import com.zyhang.seekBarBubble.delegate.kotlin.setDefaultListener
+import androidx.appcompat.app.AppCompatActivity
+import com.zyhang.seekbarbubble.delegate.SeekBarBubbleDelegate
+import com.zyhang.seekbarbubble.delegate.kotlin.setDefaultListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**

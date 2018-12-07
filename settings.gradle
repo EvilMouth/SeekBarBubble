@@ -1,1 +1,1 @@
-include ':app', ':seekBarBubbleDelegate', ':seekBarBubble', ':seekBarBubbleDelegate-kotlin'
+include ':app', ':seekbar-bubble-delegate', ':seekbar-bubble', ':seekbar-bubble-delegate-kotlin'
