@@ -18,17 +18,11 @@ implementation 'com.zyhang:seekbarbubbledelegate:<latest-version>'
 ### Usage
 具体可以参考[MainActivity.kt](https://github.com/izyhang/SeekBarBubble/blob/master/app/src/main/kotlin/com/zyhang/seekBarBubble/example/MainActivity.kt)
 ```kotlin
-val seekBarBubbleDelegate = SeekBarBubbleDelegate(this,
-                seekBar,
+val seekBarBubbleDelegate = SeekBarBubbleDelegate(context, seekBar,
                 LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
-        with(seekBarBubbleDelegate) {
-            setDefaultListener { _, progress, _ ->
-                bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "$progress''"
-            }
-            // always show
-            showBubble(true)
-            bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "${seekBar.progress}''"
-        }
+seekBarBubbleDelegate.setDefaultListener { _, progress, _ ->
+    bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "$progress''"
+}
 ```
 
 ## Kotlin 扩展
