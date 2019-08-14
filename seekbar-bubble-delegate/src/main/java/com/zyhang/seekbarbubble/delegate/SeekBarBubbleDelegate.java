@@ -169,7 +169,10 @@ public class SeekBarBubbleDelegate implements SeekBar.OnSeekBarChangeListener {
         // 获取整个SeekBar在屏幕的位置
         seekBar.getGlobalVisibleRect(mRect);
         // 重复赋值left right为气泡移动范围
-        int offset = seekBar.getThumb().getIntrinsicWidth() / 2 - seekBar.getThumbOffset();
+        int offset = 0;
+        if (seekBar.getThumb() != null) {
+            offset = seekBar.getThumb().getIntrinsicWidth() / 2 - seekBar.getThumbOffset();
+        }
         mRect.left = mRect.left + seekBar.getPaddingLeft() + offset;
         mRect.right = mRect.right - seekBar.getPaddingRight() - offset;
 
