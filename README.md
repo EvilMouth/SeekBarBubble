@@ -19,7 +19,7 @@ allprojects {
 	}
 }
 dependencies {
-    implementation 'net.evilmouth:seekbarbubbledelegate:<latest-version>'
+    implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubbledelegate:<latest-version>'
 }
 ```
 
@@ -37,7 +37,7 @@ seekBarBubbleDelegate.setDefaultListener { _, progress, _ ->
 
 ### Installation
 ```gradle
-implementation 'net.evilmouth:seekbarbubbledelegate-kotlin:<latest-version>'
+implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubbledelegate-kotlin:<latest-version>'
 ```
 
 ## SeekBarBubble
@@ -49,7 +49,7 @@ implementation 'net.evilmouth:seekbarbubbledelegate-kotlin:<latest-version>'
 
 ### Installation
 ```gradle
-implementation 'net.evilmouth:seekbarbubble:<latest-version>'
+implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubble:<latest-version>'
 ```
 
 ### Usage
