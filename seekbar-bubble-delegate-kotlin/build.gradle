@@ -6,8 +6,6 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
-        versionCode 1
-        versionName POM_PUBLISH_VERSION
     }
 
     sourceSets {
@@ -28,4 +26,4 @@ dependencies {
     api project(':seekbar-bubble-delegate')
 }
 
-apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'
+apply from: "${rootDir}/gradle/publish.gradle"
