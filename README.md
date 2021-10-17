@@ -1,8 +1,8 @@
 # SeekBarBubble
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![Download](https://api.bintray.com/packages/zyhang/maven/seekBarBubbleDelegate/images/download.svg)](https://bintray.com/zyhang/maven/seekBarBubbleDelegate/_latestVersion)
 [![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://developer.android.com/about/versions/android-4.1)
-[![Author](https://img.shields.io/badge/Author-zyhang-red.svg?style=flat)](https://www.zyhang.com/)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/evilmouth/SeekBarBubble)
+[![Author](https://img.shields.io/badge/Author-EvilMouth-red.svg?style=flat)](https://www.evilmouth.net/)
 
 SeekBar滑动跟随气泡辅助
 
@@ -12,11 +12,19 @@ SeekBar滑动跟随气泡辅助
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubbledelegate:<latest-version>'
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+dependencies {
+    implementation 'net.evilmouth:seekbarbubbledelegate:<latest-version>'
+}
 ```
 
 ### Usage
-具体可以参考[MainActivity.kt](https://github.com/izyhang/SeekBarBubble/blob/master/app/src/main/kotlin/com/zyhang/seekBarBubble/example/MainActivity.kt)
+具体可以参考[MainActivity.kt](https://github.com/evilmouth/SeekBarBubble/blob/master/app/src/main/kotlin/com/zyhang/seekBarBubble/example/MainActivity.kt)
 ```kotlin
 val seekBarBubbleDelegate = SeekBarBubbleDelegate(context, seekBar,
                 LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
@@ -29,7 +37,7 @@ seekBarBubbleDelegate.setDefaultListener { _, progress, _ ->
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<latest-version>'
+implementation 'net.evilmouth:seekbarbubbledelegate-kotlin:<latest-version>'
 ```
 
 ## SeekBarBubble
@@ -41,7 +49,7 @@ implementation 'com.zyhang:seekbarbubbledelegate-kotlin:<latest-version>'
 
 ### Installation
 ```gradle
-implementation 'com.zyhang:seekbarbubble:<latest-version>'
+implementation 'net.evilmouth:seekbarbubble:<latest-version>'
 ```
 
 ### Usage
