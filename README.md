@@ -19,17 +19,16 @@ allprojects {
 	}
 }
 dependencies {
-    implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubbledelegate:<latest-version>'
+    implementation 'com.github.EvilMouth.SeekBarBubble:seekbar-bubble-delegate:<latest-version>'
 }
 ```
 
 ### Usage
 具体可以参考[MainActivity.kt](https://github.com/evilmouth/SeekBarBubble/blob/master/app/src/main/kotlin/com/zyhang/seekBarBubble/example/MainActivity.kt)
 ```kotlin
-val seekBarBubbleDelegate = SeekBarBubbleDelegate(context, seekBar,
-                LayoutInflater.from(this).inflate(R.layout.seekbar_bubble, null))
+val seekBarBubbleDelegate = SeekBarBubbleDelegate(context, seekBar, bubbleView)
 seekBarBubbleDelegate.setDefaultListener { _, progress, _ ->
-    bubble.findViewById<TextView>(R.id.seekBar_bubble_tv).text = "$progress''"
+    bubbleView.text = "$progress''"
 }
 ```
 
@@ -37,7 +36,7 @@ seekBarBubbleDelegate.setDefaultListener { _, progress, _ ->
 
 ### Installation
 ```gradle
-implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubbledelegate-kotlin:<latest-version>'
+implementation 'com.github.EvilMouth.SeekBarBubble:seekbar-bubble-delegate-kotlin:<latest-version>'
 ```
 
 ## SeekBarBubble
@@ -49,7 +48,7 @@ implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubbledelegate-kotlin:
 
 ### Installation
 ```gradle
-implementation 'com.github.EvilMouth.SeekBarBubble:seekbarbubble:<latest-version>'
+implementation 'com.github.EvilMouth.SeekBarBubble:seekbar-bubble:<latest-version>'
 ```
 
 ### Usage
