@@ -3,6 +3,7 @@
 [![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://developer.android.com/about/versions/android-4.1)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/evilmouth/SeekBarBubble)](https://github.com/EvilMouth/SeekBarBubble/releases/)
 [![Author](https://img.shields.io/badge/Author-EvilMouth-red.svg?style=flat)](https://www.evilmouth.net/)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/evilmouth/seekbarbubble/Android%20CI?logo=github)
 
 SeekBar滑动跟随气泡辅助
 
